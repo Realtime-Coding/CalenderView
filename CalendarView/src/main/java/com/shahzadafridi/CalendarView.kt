@@ -120,8 +120,8 @@ class CalendarView : LinearLayout {
      * Display dates correctly in grid
      */
     @JvmOverloads
-    fun updateCalendar(events: HashSet<Date>? = null) {
-        val cells = ArrayList<Date>()
+    fun updateCalendar(events: HashSet<Calendar>? = null) {
+        val cells = ArrayList<Calendar>()
         val calendar = currentDate.clone() as Calendar
 
         // determine the cell for current month's beginning
@@ -133,7 +133,9 @@ class CalendarView : LinearLayout {
 
         // fill cells
         while (cells.size < DAYS_COUNT) {
-            cells.add(calendar.time)
+            cells.add(Calendar.getInstance().apply {
+                this.time = calendar.time
+            })
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 

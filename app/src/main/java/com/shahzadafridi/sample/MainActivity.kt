@@ -17,8 +17,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val events = HashSet<Date>()
-        events.add(Date())
+        //Event
+
+        val events = HashSet<Calendar>()
+        events.add(Calendar.getInstance().apply {
+            this.time = Date()
+        })
 
         binding.calendarView.updateCalendar(events)
 
