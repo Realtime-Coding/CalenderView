@@ -1,6 +1,7 @@
 package com.shahzadafridi.sample
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,26 +26,52 @@ class MainActivity : AppCompatActivity() {
             this.time = Date()
         })
 
-        binding.calendarView.updateCalendar(events)
+
+        binding.calendarView.builder()
+                .withHeaderPanel(
+                        font = R.font.pfd_cond_regular,
+                        dateFormat = "MMM yyyy",
+                        textcolor = R.color.white,
+                        null,
+                        null,
+                        R.color.black
+                )
+                .withHeaderPanleMargin(0,16,0,0)
+                .withDayPanel(
+                        font = R.font.pfd_cond_regular,
+                        textColor = R.color.black,
+                        background = R.color.white
+                )
+                .withCellPanel(
+                        font = R.font.pfd_cond_regular,
+                        textColor = R.color.black,
+                        textSize = 12,
+                        selectedTextColor = R.color.white,
+                        selectedBackground = R.drawable.ic_green_oval,
+                        background = R.color.white
+                )
+                .withCalenderViewBackground(R.drawable.rect_lr_wround_bg)
+                .updateCalendar(events)
 
         // assign event handler
         binding.calendarView.setEventHandler(object : CalenderViewInterface.EventHandler{
 
-            override fun onCellClick(view: View) {
-                TODO("Not yet implemented")
+            override fun onCellClick(view: View, date: Date, position: Int, id: Long) {
+                Log.e("TEST","onCellClick")
             }
 
-            override fun onCellLongClick(date: Date, position: Int, id: Long) {
+            override fun onCellLongClick(view: View, date: Date, position: Int, id: Long) {
                 val df = SimpleDateFormat.getDateInstance()
                 Toast.makeText(this@MainActivity, df.format(date), Toast.LENGTH_SHORT).show()
+                Log.e("TEST","onCellLongClick")
             }
 
             override fun onNextClick(view: View) {
-                TODO("Not yet implemented")
+                Log.e("TEST","onNextClick")
             }
 
             override fun onPreviousClick(view: View) {
-                TODO("Not yet implemented")
+                Log.e("TEST","onPreviousClick")
             }
         })
     }
