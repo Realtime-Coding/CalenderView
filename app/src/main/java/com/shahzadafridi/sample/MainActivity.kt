@@ -1,9 +1,11 @@
 package com.shahzadafridi.sample
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.shahzadafridi.CalendarView
+import com.shahzadafridi.calendarview.CalendarView
+import com.shahzadafridi.calendarview.CalenderViewInterface
 import com.shahzadafridi.sample.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //Event
-
         val events = HashSet<Calendar>()
         events.add(Calendar.getInstance().apply {
             this.time = Date()
@@ -27,14 +28,24 @@ class MainActivity : AppCompatActivity() {
         binding.calendarView.updateCalendar(events)
 
         // assign event handler
-        binding.calendarView.setEventHandler(object : CalendarView.EventHandler{
-            override fun onDayLongPress(date: Date?) {
-                // show returned day
-                val df = SimpleDateFormat.getDateInstance()
-                Toast.makeText(this@MainActivity, df.format(date), Toast.LENGTH_SHORT).show()
+        binding.calendarView.setEventHandler(object : CalenderViewInterface.EventHandler{
 
+            override fun onCellClick(view: View) {
+                TODO("Not yet implemented")
             }
 
+            override fun onCellLongClick(date: Date, position: Int, id: Long) {
+                val df = SimpleDateFormat.getDateInstance()
+                Toast.makeText(this@MainActivity, df.format(date), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNextClick(view: View) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onPreviousClick(view: View) {
+                TODO("Not yet implemented")
+            }
         })
     }
 }

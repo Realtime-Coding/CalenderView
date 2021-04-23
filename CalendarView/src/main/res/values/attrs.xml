@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<declare-styleable name="CalendarView">
+
+	<declare-styleable name="CvHeaderPanel">
 		<attr name="dateFormat" format="string"/>
+		<attr name="header_font" format="integer"/>
+		<attr name="header_txt_clr" format="integer" />
+		<attr name="header_bg_clr" format="integer" />
 	</declare-styleable>
+
+	<declare-styleable name="CvDayPanel">
+		<attr name="day_txt_clr" format="integer" />
+		<attr name="day_bg_clr" format="integer" />
+		<attr name="day_font" format="integer"/>
+	</declare-styleable>
+
+	<declare-styleable name="CvCellPanel">
+		<attr name="cell_font" format="integer"/>
+		<attr name="cell_size" format="dimension" />
+		<attr name="cell_bg" format="integer" />
+		<attr name="cell_select_bg" format="integer" />
+		<attr name="cv_bg" format="integer" />
+	</declare-styleable>
+
 </resources>
