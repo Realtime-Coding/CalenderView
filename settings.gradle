@@ -1,0 +1,3 @@
+include ':CalendarView'
+include ':app'
+rootProject.name = "CalendarView"
