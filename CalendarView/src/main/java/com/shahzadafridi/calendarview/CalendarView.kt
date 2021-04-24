@@ -4,13 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import android.widget.AdapterView.OnItemLongClickListener
-import android.widget.AdapterView.OnItemClickListener
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.children
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -52,8 +51,9 @@ class CalendarView : LinearLayout, CalenderViewInterface {
     private var btnNext: ImageView? = null
     private var txtDate: TextView? = null
     private var dateRl: RelativeLayout? = null
-    private var grid: GridView? = null
+    private var recyclerView: RecyclerView? = null
     private var adapter: CalendarAdapter? = null
+    private var cellConfig: CellConfiguration? = null
 
     // seasons' rainbow
     var rainbow = intArrayOf(
@@ -175,7 +175,9 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         btnNext = findViewById<View>(R.id.calendar_next_button) as ImageView
         txtDate = findViewById<View>(R.id.calendar_date_display) as TextView
         dateRl = findViewById<RelativeLayout>(R.id.calendar_date_rl)
-        grid = findViewById<View>(R.id.calendar_grid) as GridView
+        recyclerView = findViewById<View>(R.id.calendar_recyclerView) as RecyclerView
+        recyclerView!!.setHasFixedSize(true)
+        recyclerView!!.layoutManager = GridLayoutManager(context,7)
     }
 
     private fun assignClickHandlers() {
@@ -192,18 +194,6 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             updateCalendar()
             eventHandler!!.onPreviousClick(it)
         }
-
-        // long-pressing a day
-        grid!!.onItemLongClickListener = OnItemLongClickListener { view, cell, position, id -> // handle long-press
-            if (eventHandler == null) return@OnItemLongClickListener false
-            eventHandler!!.onCellLongClick(view, view.getItemAtPosition(position) as Date, position, id)
-            true
-        }
-
-        grid!!.onItemClickListener = OnItemClickListener { view, cell, position, id ->
-            if (eventHandler == null) return@OnItemClickListener
-            eventHandler!!.onCellClick(view, view.getItemAtPosition(position) as Date, position, id)
-        }
     }
 
     /**
@@ -215,23 +205,23 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         val calendar = currentDate.clone() as Calendar
 
         // determine the cell for current month's beginning
-        calendar[Calendar.DAY_OF_MONTH] = 1
+        calendar[Calendar.DATE] = 1
         val monthBeginningCell = calendar[Calendar.DAY_OF_WEEK] - 1
 
         // move calendar backwards to the beginning of the week
-        calendar.add(Calendar.DAY_OF_MONTH, -monthBeginningCell)
+        calendar.add(Calendar.DATE, -monthBeginningCell)
 
         // fill cells
         while (cells.size < DAYS_COUNT) {
             cells.add(Calendar.getInstance().apply {
                 this.time = calendar.time
             })
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            calendar.add(Calendar.DATE, 1)
         }
 
         // update grid
-        adapter = CalendarAdapter(context, cells, events)
-        grid!!.adapter = adapter
+        adapter = CalendarAdapter(context, cells, events,eventHandler,cellConfig)
+        recyclerView!!.adapter = adapter
 
         // update title
         val sdf = SimpleDateFormat(headerDateFormat)
@@ -251,6 +241,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
      */
     fun setEventHandler(eventHandler: CalenderViewInterface.EventHandler?) {
         this.eventHandler = eventHandler
+        adapter!!.setEventHandler(eventHandler!!)
     }
 
 
@@ -341,6 +332,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             textSize: Int,
             selectedTextColor: Int,
             selectedBackground: Int,
+            cellSize: Int?,
             background: Int?
     ): CalendarView {
         cell_font = font
@@ -349,7 +341,15 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         cell_selected_txt_clr = selectedTextColor
         cell_select_bg = selectedBackground
         cell_bg = background
-        adapter!!.setCellConfig(cell_txt_clr,cell_bg,cell_selected_txt_clr,cell_select_bg,cell_font,cell_size,cell_txt_size)
+        cellConfig = CellConfiguration(
+            cellTxtClr = cell_txt_clr,
+            cellBg = cell_bg,
+            cellSelectedClr = cell_selected_txt_clr,
+            cellSelectBg = cell_select_bg,
+            cellFont = cell_font,
+            cellTxtSize = cell_txt_size,
+            cellSize = cellSize
+        )
         return this
     }
 
@@ -359,7 +359,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             left: Int,
             right: Int
     ): CalendarView {
-        setMargin(grid!!, left, right, top, bottom)
+        setMargin(recyclerView!!, left, right, top, bottom)
         return this
     }
 

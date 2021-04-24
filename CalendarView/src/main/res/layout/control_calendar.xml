@@ -119,11 +119,10 @@
     </LinearLayout>
 
     <!-- days view -->
-    <GridView
-        android:id="@+id/calendar_grid"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:numColumns="7" />
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
