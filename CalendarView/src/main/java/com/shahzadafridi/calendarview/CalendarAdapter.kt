@@ -109,5 +109,6 @@ class CalendarAdapter(
         cell_font = cellFont
         cell_size = cellSize
         cell_txt_size = cellTxtSize
+        notifyDataSetChanged()
     }
 }

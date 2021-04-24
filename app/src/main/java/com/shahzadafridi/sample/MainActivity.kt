@@ -31,17 +31,18 @@ class MainActivity : AppCompatActivity() {
                 .withHeaderPanel(
                         font = R.font.pfd_cond_regular,
                         dateFormat = "MMM yyyy",
-                        textcolor = R.color.white,
+                        textcolor = R.color.black,
                         null,
                         null,
-                        R.color.black
+                        R.color.white
                 )
-                .withHeaderPanleMargin(0,16,0,0)
+                .withHeaderPanleMargin(8,8,8,8)
                 .withDayPanel(
                         font = R.font.pfd_cond_regular,
-                        textColor = R.color.black,
-                        background = R.color.white
+                        textColor = R.color.white,
+                        background = R.color.black
                 )
+                .withDayPanelMargin(8,8,8,8)
                 .withCellPanel(
                         font = R.font.pfd_cond_regular,
                         textColor = R.color.black,
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
                         selectedBackground = R.drawable.ic_green_oval,
                         background = R.color.white
                 )
+                .withCellPanelMargin(8,8,8,8)
                 .withCalenderViewBackground(R.drawable.rect_lr_wround_bg)
                 .updateCalendar(events)
 

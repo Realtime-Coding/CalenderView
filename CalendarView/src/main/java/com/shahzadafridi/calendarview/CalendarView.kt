@@ -238,13 +238,10 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         txtDate!!.text = sdf.format(currentDate.time)
 
         // set header color according to current season
-        val month = currentDate[Calendar.MONTH]
-        val season = monthSeason[month]
-        val color = rainbow[season]
-        header!!.setBackgroundColor(ContextCompat.getColor(context, color))
-        header_bg_clr?.let {
-            header!!.setBackgroundColor(ContextCompat.getColor(context, it))
-        }
+        // val month = currentDate[Calendar.MONTH]
+        // val season = monthSeason[month]
+        // val color = rainbow[season]
+        // header!!.setBackgroundColor(ContextCompat.getColor(context, color))
 
         return this
     }
@@ -302,6 +299,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             left: Int,
             right: Int
     ): CalendarView {
+        setMargin(header!!, left, right, top, bottom)
         return this
     }
 
@@ -321,7 +319,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             }
         }
         day_bg_clr?.let {
-            header!!.background = ContextCompat.getDrawable(context,it)
+            header!!.setBackgroundColor(ContextCompat.getColor(context, it))
         }
         return this
     }
@@ -377,7 +375,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
 
     //Set Margin to view.
     fun setMargin(view: View, left: Int, right: Int, top: Int, bottom: Int) {
-        val params = view.getLayoutParams() as RelativeLayout.LayoutParams
+        val params = view.getLayoutParams() as LinearLayout.LayoutParams
         params.setMargins(left, top, right, bottom)
         view.setLayoutParams(params)
     }
