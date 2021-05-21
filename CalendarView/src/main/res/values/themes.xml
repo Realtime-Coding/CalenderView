@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AnimatedDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_up</item>
+    </style>
+
+</resources>
