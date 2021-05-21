@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+
 	<declare-styleable name="CalendarView">
+
 		<attr name="dateFormat" format="string"/>
+		<attr name="cv_bg" format="reference" />
+
+		<!--
+		<attr name="month_font" format="reference"/>
+		<attr name="month_txt_clr" format="color" />
+		<attr name="month_txt_size" format="dimension"/>
+		<attr name="month_selected_txt_clr" format="color"/>
+		<attr name="month_bg" format="reference"/>
+		<attr name="month_unselect_txt_clr" format="reference"/>
+
+		<attr name="week_txt_size" format="dimension"/>
+		<attr name="week_txt_clr" format="color" />
+		<attr name="week_bg_clr" format="color" />
+		<attr name="week_font" format="reference"/>
+
+		<attr name="day_font" format="reference"/>
+		<attr name="day_size" format="dimension" />
+		<attr name="day_txt_clr" format="color"/>
+		<attr name="day_text_size" format="dimension"/>
+		<attr name="day_bg" format="reference" />
+		<attr name="day_select_bg" format="reference" />
+		<attr name="day_select_txt_clr" format="color"/>
+		-->
 	</declare-styleable>
+
 </resources>
