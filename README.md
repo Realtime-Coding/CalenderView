@@ -40,13 +40,15 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.1'
           textSize = 20,
           selectedTextColor = R.color.black,
           unSelectedTextColor = R.color.greyed_out,
-          background = R.color.white
+          background = R.color.white,
+          months = monthsNameList
       )
       .withWeekPanel(
           font = R.font.titillium_web_semibold,
           textColor = R.color.black,
           textSize = 14,
-          background = R.color.white
+          background = R.color.white,
+          weekDays = weekDaysNameList
       )
       .withDayPanel(
           font = R.font.titillium_web_semibold,
