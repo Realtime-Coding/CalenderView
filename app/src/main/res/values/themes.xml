@@ -3,7 +3,7 @@
     <style name="Theme.CalendarView" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/teal_200</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -12,11 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
-    </style>
-
-    <style name="AnimatedDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowEnterAnimation">@anim/dialog_slide_bottom</item>
-        <item name="android:windowExitAnimation">@anim/dialog_slide_up</item>
     </style>
 
 </resources>
