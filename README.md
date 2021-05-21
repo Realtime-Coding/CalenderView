@@ -16,7 +16,7 @@ A sample library which gives you custom design CalendarView with dialog function
 #### 1.1: Import Library
 
 ```groovy
-implementation 'com.github.shahzadafridi:CalenderView:1.1.1'
+implementation 'com.github.shahzadafridi:CalenderView:1.1.2'
 ```
 
 #### 1.2: XML File
