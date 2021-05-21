@@ -123,12 +123,19 @@ calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
  
  
 #### Watch Demo Video
-- Click me: [@realtimecoding](https://www.youtube.com/watch?v=rI5MAfJp7Sk)
+![Logo](https://yt3.ggpht.com/yti/ANoDKi5JnCxTB3YJkKnT2Rz_E2wuo6x619ACuiDmuN6n=s108-c-k-c0x00ffffff-no-rj)
+
+Click me: [@realtimecoding](https://www.youtube.com/watch?v=rI5MAfJp7Sk)
 
 You can subscribe the channel for more android related stuffs as I am planning to work on android tutorials.
 
 ### Contributing
 
 Pull requests are welcomed!
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
 
 
