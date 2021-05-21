@@ -25,6 +25,31 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     var dialog: CalendarViewDialog? = null
 
+    var months = arrayListOf<String>().apply {
+        add("January")
+        add("February")
+        add("March")
+        add("April")
+        add("May")
+        add("June")
+        add("July")
+        add("August")
+        add("September")
+        add("October")
+        add("November")
+        add("December")
+    }
+
+    var weekDays = arrayListOf<String>().apply {
+        add("SUN")
+        add("MON")
+        add("TUE")
+        add("WED")
+        add("THU")
+        add("FRI")
+        add("SAT")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -60,13 +85,15 @@ class MainActivity : AppCompatActivity() {
                 textSize = 20,
                 selectedTextColor = R.color.black,
                 unSelectedTextColor = R.color.greyed_out,
-                background = R.color.white
+                background = R.color.white,
+                months
             )
             .withWeekPanel(
                 font = R.font.titillium_web_semibold,
                 textColor = R.color.black,
                 textSize = 14,
-                background = R.color.white
+                background = R.color.white,
+                weekDays
             )
             .withDayPanel(
                 font = R.font.titillium_web_semibold,
