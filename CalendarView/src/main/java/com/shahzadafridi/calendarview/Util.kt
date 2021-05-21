@@ -15,23 +15,28 @@ object Util {
     val Int.dp: Int
         get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
-    /**
-     * CREATE CUSTOM DIALOG
-     */
+    var months = arrayListOf<String>().apply {
+        add("Januari")
+        add("Februari")
+        add("Maart")
+        add("April")
+        add("Mei")
+        add("Juni")
+        add("Juli")
+        add("Augustus")
+        add("September")
+        add("Oktober")
+        add("November")
+        add("December")
+    }
 
-    fun onCreateDialog(context: Context, layout: CalendarView, cancelable: Boolean): Dialog {
-        val dialog = Dialog(context, android.R.style.Theme_Dialog)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(layout)
-        dialog.window!!.setGravity(Gravity.CENTER)
-        dialog.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window!!.attributes.windowAnimations = R.style.AnimatedDialogStyle
-        dialog.window!!.setGravity(Gravity.TOP)
-        dialog.setCancelable(cancelable)
-        return dialog
+    var weekDays = arrayListOf<String>().apply {
+        add("ZO")
+        add("MA")
+        add("DI")
+        add("WO")
+        add("DO")
+        add("VR")
+        add("ZA")
     }
 }

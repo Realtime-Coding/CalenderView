@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shahzadafridi.calendarview.Util.dp
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class CalendarView : LinearLayout, CalenderViewInterface {
 
@@ -77,20 +78,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
 
     //Months
     var monthSeason = intArrayOf(2, 2, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2)
-    var months = arrayListOf<String>().apply {
-        add("Januari")
-        add("Februari")
-        add("Maart")
-        add("April")
-        add("Mei")
-        add("Juni")
-        add("Juli")
-        add("Augustus")
-        add("September")
-        add("Oktober")
-        add("November")
-        add("December")
-    }
+
     var monthNumber: Int = currentDate.get(Calendar.MONTH)
 
     var events: HashSet<Calendar>? = hashSetOf()
@@ -204,7 +192,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         calendarDayRv!!.adapter = adapter
 
         //update months
-        adapterMonth = MonthAdapter(context,this,monthConfig,months,monthNumber)
+        adapterMonth = MonthAdapter(context,this,monthConfig,Util.months,monthNumber)
         calendarMonthRv!!.adapter = adapterMonth
 
         val sdfYear = if (dateFormat != null) SimpleDateFormat(dateFormat) else SimpleDateFormat(DATE_FORMAT)
@@ -290,8 +278,12 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         textSize: Int?,
         selectedTextColor: Int?,
         unSelectedTextColor: Int?,
-        background: Int?
+        background: Int?,
+        months: ArrayList<String>?
     ): CalendarView {
+        if (months != null) {
+            Util.months = months
+        }
         month_font = font
         month_txt_size = textSize
         month_selected_txt_clr = selectedTextColor
@@ -321,11 +313,16 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         return this
     }
 
-    override fun withWeekPanel(font: Int?, textColor: Int?, textSize: Int?, background: Int?): CalendarView {
+    override fun withWeekPanel(font: Int?, textColor: Int?, textSize: Int?, background: Int?,weekDays: ArrayList<String>?): CalendarView {
+        if (weekDays != null) {
+            Util.weekDays = weekDays
+        }
         week_font = font
         week_txt_clr = textColor
         week_txt_size = textSize
         week_bg_clr = background
+
+        var i = 0
 
         weekLayout!!.children.iterator().forEach {
             week_font?.let { font ->
@@ -337,6 +334,8 @@ class CalendarView : LinearLayout, CalenderViewInterface {
             week_txt_size?.let { size ->
                 (it as TextView).setTextSize(size.toFloat())
             }
+            (it as TextView).text = Util.weekDays[i]
+            i++
         }
 
         week_bg_clr?.let {
