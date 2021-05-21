@@ -113,8 +113,8 @@ calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
 #### Methods Info
 - **withYearPanel** can change Date formate, Text Color, Text Size, Text Font
 - **withBackButton** can close CalendarView with Back Button
-- **withMonthPanel** can change the month Text font, Text Size, Selected Text Color, Unselected Text Color, Background of month layout
-- **withWeekPanel** can change the week days Text font, Text Color, Text Size, Background of week layout
+- **withMonthPanel** can change the month Text font, Text Size, Selected Text Color, Unselected Text Color, month names, Background of month layout
+- **withWeekPanel** can change the week days Text font, Text Color, Text Size,days name, Background of week layout
 - **withDayPanel** can change the day Text font, Text Color, Text Size, Selected background, Selected Text Color, Background of day
 - **withCalenderViewBg** can change the CalendarView background
 - **withEvents** can gives events dates to calendarView which shows small dot indcaotr below of day
