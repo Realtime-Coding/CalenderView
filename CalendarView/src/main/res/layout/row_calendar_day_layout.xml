@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/row_calendar_layout"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
-    android:background="@drawable/custom_ripple">
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
 
     <TextView
 		android:id="@+id/control_calendar_day"
@@ -16,7 +15,19 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:text="00"
+        android:textSize="14dp"
+        android:textColor="@color/cblack"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <TextView
+        android:id="@+id/control_calendar_event"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_centerHorizontal="true"
+        android:visibility="visible"
+        android:layout_below="@+id/control_calendar_day"
+        android:background="@drawable/ic_black_oval"/>
 
 </RelativeLayout>

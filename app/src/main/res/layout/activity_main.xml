@@ -11,26 +11,8 @@
         android:id="@+id/calendar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:dateFormat="MMMM yyyy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-<!--        app:header_font="@font/pfd_cond_regular"-->
-<!--        app:header_txt_clr="@color/white"-->
-<!--        app:header_bg_clr="@color/black"-->
-
-<!--        app:day_font="@font/pfd_cond_regular"-->
-<!--        app:day_txt_clr="@color/black"-->
-<!--        app:day_bg_clr="@color/white"-->
-<!--        app:day_txt_size="14"-->
-
-<!--        app:cell_font="@font/pfd_cond_regular"-->
-<!--        app:cell_txt_clr="@color/black"-->
-<!--        app:cell_bg="@color/white"-->
-<!--        app:cell_size="14"-->
-<!--        app:cell_text_size="14"-->
-<!--        app:cell_select_txt_clr="@color/white"-->
-<!--        app:cell_select_bg="@color/black"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
