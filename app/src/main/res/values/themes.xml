@@ -13,4 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="AnimatedDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowEnterAnimation">@anim/dialog_slide_bottom</item>
+        <item name="android:windowExitAnimation">@anim/dialog_slide_up</item>
+    </style>
+
 </resources>

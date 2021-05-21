@@ -1,11 +1,20 @@
 package com.shahzadafridi.sample
 
+import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.shahzadafridi.calendarview.CalendarView
+import com.shahzadafridi.calendarview.CalendarViewDialog
 import com.shahzadafridi.calendarview.CalenderViewInterface
 import com.shahzadafridi.sample.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
@@ -14,15 +23,27 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
+    var dialog: CalendarViewDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //Fake Event
+        setUpCalendarView(binding.calendarView)
+    }
+
+    fun showDialogCalendar(view: View) {
+        dialog = CalendarViewDialog(this)
+        dialog!!.setCancelable(false)
+        dialog!!.show()
+        setUpCalendarView(dialog!!.getCalendarView())
+    }
+
+    private fun setUpCalendarView(calendarView: CalendarView) {
+        //Fake Events
         val events = HashSet<Calendar>()
-        var c1 = Calendar.getInstance()
+        val c1 = Calendar.getInstance()
         for (i in 15..20){
             c1.set(Calendar.DAY_OF_MONTH,i)
             events.add(Calendar.getInstance().apply {
@@ -30,7 +51,8 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        binding.calendarView.builder()
+        //Setup CalendarView.
+        calendarView.builder()
             .withYearPanel("yyyy",R.color.black,42,R.font.titillium_web_semibold)
             .withBackButton(true,R.drawable.ic_up_round)
             .withMonthPanel(
@@ -58,8 +80,8 @@ class MainActivity : AppCompatActivity() {
             .withEvents(events, R.color.green)
             .buildCalendar()
 
-        // assign event handler
-        binding.calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
+        //CalendarView event handler
+        calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
 
             override fun onDayClick(view: View?, date: Date, position: Int) {
                 val df = SimpleDateFormat.getDateInstance()
@@ -75,6 +97,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onBackClick(view: View?) {
                 Log.e("TEST", "onBackClick")
+                dialog?.dismiss()
             }
 
             override fun onMonthClick(view: View?, month: String, position: Int) {
@@ -83,4 +106,5 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 }
