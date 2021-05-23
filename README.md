@@ -33,33 +33,46 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.3'
   var calendarView = findViewBydId(R.id.calendar_view)
 
   calendarView.builder()
-      .withYearPanel("yyyy",R.color.black,42,R.font.titillium_web_semibold)
-      .withBackButton(true,R.drawable.ic_up_round)
+      .withYearPanel(
+          dateFormat = "yyyy",
+          textColor = R.color.greyed_out,
+          textSize = 42f,
+          font = R.font.titillium_web_semibold
+      )
+      .withBackButton(
+          isShow = true,
+          background = R.drawable.ic_up_round
+      )
       .withMonthPanel(
           font = R.font.titillium_web_semibold,
-          textSize = 20,
+          textSize = 20f,
           selectedTextColor = R.color.black,
           unSelectedTextColor = R.color.greyed_out,
           background = R.color.white,
-          months = monthsNameList
+          months = months
       )
       .withWeekPanel(
           font = R.font.titillium_web_semibold,
           textColor = R.color.black,
-          textSize = 14,
+          textSize = 14f,
           background = R.color.white,
-          weekDays = weekDaysNameList
+          weekDays = weekDays
       )
       .withDayPanel(
           font = R.font.titillium_web_semibold,
           textColor = R.color.black,
-          textSize = 16,
+          textSize = 16f,
           selectedTextColor = R.color.white,
           selectedBackground = R.drawable.ic_green_oval,
           background = R.color.white
       )
-      .withCalenderViewBg(R.drawable.rect_lr_wround_bg)
-      .withEvents(events, R.color.green)
+      .withCalenderViewBg(
+          background = R.drawable.rect_lr_wround_bg
+      )
+      .withEvents(
+          events = events,
+          eventDotColor = R.color.green
+      )
       .buildCalendar()
 ```
 
