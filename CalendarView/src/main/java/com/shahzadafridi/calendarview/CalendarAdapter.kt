@@ -2,8 +2,10 @@ package com.shahzadafridi.calendarview
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.Exception
 import java.util.*
 
 
@@ -24,6 +27,7 @@ class CalendarAdapter(
     monthNumber: Int
 ) : RecyclerView.Adapter<CalendarAdapter.MyViewHolder>() {
 
+    val TAG: String = "CalendarAdapter"
     // for view inflation
     private val inflater: LayoutInflater
     private val mContext: Context
@@ -33,7 +37,7 @@ class CalendarAdapter(
     private var day_font: Int? = null
     private var day_bg: Int? = null
     private var day_txt_clr: Int? = null
-    private var day_txt_size: Int? = null
+    private var day_txt_size: Float? = null
     private var day_selected_txt_clr: Int? = null
     private var day_selected_bg: Int? = null
     private var event_dot_clr: Int? = null
@@ -83,13 +87,17 @@ class CalendarAdapter(
             rowLayout.setOnClickListener(this)
             rowLayout.setOnLongClickListener(this)
             day_txt_size?.let {
-                textView.textSize = it.toFloat()
+                textView.textSize = it
             }
             day_txt_clr?.let {
                 textView.setTextColor(ContextCompat.getColor(mContext, it))
             }
-            day_font?.let {
-                textView.typeface = ResourcesCompat.getFont(mContext, it)
+            try {
+                day_font?.let {
+                    textView.typeface = ResourcesCompat.getFont(mContext, it)
+                }
+            }catch (e: Exception){
+                Log.e(TAG, "$day_font not found!")
             }
             day_bg?.let {
                 rowLayout.setBackgroundResource(it)
@@ -115,6 +123,7 @@ class CalendarAdapter(
             if (month != mMonthNumber || year != today.get(Calendar.YEAR)) {
                 // if this day is outside current month, grey it out
                 holder.textView.setTextColor(ContextCompat.getColor(mContext, R.color.greyed_out))
+                holder.rowLayout.isEnabled = false
             } else if (today.get(Calendar.DATE) == day && today.get(Calendar.MONTH) == month && today.get(Calendar.YEAR) == year) {
                 // if it is today, set it to blue/bold
                 day_selected_txt_clr?.let {
@@ -127,6 +136,7 @@ class CalendarAdapter(
                 } ?:run {
                     holder.rowLayout.setBackgroundResource(R.drawable.ic_black_oval)
                 }
+                holder.rowLayout.isEnabled = true
             }
 
             textViewEvent.visibility = View.GONE

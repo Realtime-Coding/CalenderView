@@ -6,6 +6,6 @@ data class DayConfiguration(
     var daySelectedClr: Int? = null,
     var daySelectedBg: Int? = null,
     var dayFont: Int? = null,
-    var dayTxtSize: Int? = null,
+    var dayTxtSize: Float? = null,
     var eventDotColor: Int? = null
 )
