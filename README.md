@@ -1,5 +1,5 @@
 # CalendarView
-A sample library which gives you custom design CalendarView with dialog functionality and event handlers.
+A simple library which gives you custom design CalendarView with dialog functionality and event handlers.
  
 
 ### 1: CalendarView
@@ -18,7 +18,7 @@ A sample library which gives you custom design CalendarView with dialog function
 ```groovy
 implementation 'com.github.shahzadafridi:CalenderView:1.1.2'
 ```
-
+### Method A
 #### 1.2: XML File
 ```xml
 <com.shahzadafridi.calendarview.CalendarView
@@ -59,6 +59,54 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.2'
           background = R.color.white
       )
       .withCalenderViewBg(R.drawable.rect_lr_wround_bg)
+      .withEvents(events, R.color.green)
+      .buildCalendar()
+```
+
+### OR
+
+### Method B
+#### 1.2: XML File
+
+```xml
+    <com.shahzadafridi.calendarview.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:back_button_bg="@drawable/ic_up_round"
+        app:cv_bg="@drawable/rect_lr_wround_bg"
+        app:day_bg="@color/white"
+        app:day_font="@font/titillium_web_semibold"
+        app:day_select_bg="@drawable/ic_green_oval"
+        app:day_select_txt_clr="@color/white"
+        app:day_text_size="5dp"
+        app:day_txt_clr="@color/cblack"
+        app:is_back_button_show="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:month_bg="@color/black"
+        app:month_font="@font/titillium_web_semibold"
+        app:month_selected_txt_clr="@color/green"
+        app:month_txt_size="8dp"
+        app:month_unselect_txt_clr="@color/white"
+        app:week_bg_clr="@color/black"
+        app:week_font="@font/titillium_web_semibold"
+        app:week_txt_clr="@color/white"
+        app:week_txt_size="6dp"
+        app:year_date_Formate="MM YYYY"
+        app:year_text_clr="@color/cblack"
+        app:year_text_font="@font/titillium_web_semibold"
+        app:year_text_size="12dp" />
+```
+
+#### 1.3: Kotlin Code
+
+```kotlin
+
+  var calendarView = findViewBydId(R.id.calendar_view)
+
+  calendarView.builder()
       .withEvents(events, R.color.green)
       .buildCalendar()
 ```
