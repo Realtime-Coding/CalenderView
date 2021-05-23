@@ -76,6 +76,36 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.3'
       .buildCalendar()
 ```
 
+#### Extra
+You can set margin of Year, Month, Week and Day panel/section.
+
+```kotlin
+      .withYearPanleMargin(
+         top = 12,
+         bottom = 15,
+         left = 12,
+         right = 12
+      )
+      .withMonthPanleMargin(
+         top = 12,
+         bottom = 15,
+         left = 12,
+         right = 12
+      )
+      .withWeekPanelMargin(
+         top = 12,
+         bottom = 15,
+         left = 12,
+         right = 12
+      )
+      .withDayPanelMargin(
+         top = 12,
+         bottom = 15,
+         left = 12,
+         right = 12
+      )
+```
+
 ### OR
 
 ### Method B
