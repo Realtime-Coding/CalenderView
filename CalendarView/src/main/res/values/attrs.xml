@@ -3,16 +3,21 @@
 
 	<declare-styleable name="CalendarView">
 
-		<attr name="dateFormat" format="string"/>
 		<attr name="cv_bg" format="reference" />
 
-		<!--
+		<attr name="year_date_Formate" format="string"/>
+		<attr name="year_text_clr" format="reference"/>
+		<attr name="year_text_size" format="dimension"/>
+		<attr name="year_text_font" format="reference"/>
+
+		<attr name="is_back_button_show" format="boolean"/>
+		<attr name="back_button_bg" format="reference"/>
+
 		<attr name="month_font" format="reference"/>
-		<attr name="month_txt_clr" format="color" />
 		<attr name="month_txt_size" format="dimension"/>
 		<attr name="month_selected_txt_clr" format="color"/>
+		<attr name="month_unselect_txt_clr" format="color"/>
 		<attr name="month_bg" format="reference"/>
-		<attr name="month_unselect_txt_clr" format="reference"/>
 
 		<attr name="week_txt_size" format="dimension"/>
 		<attr name="week_txt_clr" format="color" />
@@ -26,7 +31,7 @@
 		<attr name="day_bg" format="reference" />
 		<attr name="day_select_bg" format="reference" />
 		<attr name="day_select_txt_clr" format="color"/>
-		-->
+
 	</declare-styleable>
 
 </resources>

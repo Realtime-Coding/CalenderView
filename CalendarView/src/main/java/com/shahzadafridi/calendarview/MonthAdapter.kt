@@ -3,6 +3,7 @@ package com.shahzadafridi.calendarview
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import java.lang.Exception
 import java.util.*
 
 class MonthAdapter(
@@ -21,6 +23,7 @@ class MonthAdapter(
     private var mPositon: Int
 ) : RecyclerView.Adapter<MonthAdapter.MyViewHolder>() {
 
+    val TAG: String = "MonthAdapter"
     // for view inflation
     private val inflater: LayoutInflater
     private val mContext: Context
@@ -28,9 +31,10 @@ class MonthAdapter(
 
     //Cell Configuration
     private var month_font: Int? = null
-    private var month_txt_size: Int? = null
+    private var month_txt_size: Float? = null
     private var month_selected_txt_clr: Int? = null
     private var month_unselected_txt_clr: Int? = null
+    private var month_background: Int? = null
 
     init {
         inflater = LayoutInflater.from(context)
@@ -40,6 +44,7 @@ class MonthAdapter(
             month_txt_size = monthConfig!!.mTxtSize
             month_selected_txt_clr = monthConfig!!.mSelectedClr
             month_unselected_txt_clr = monthConfig!!.mUnSelectedClr
+            month_background = monthConfig!!.mBg
         }
     }
 
@@ -70,12 +75,14 @@ class MonthAdapter(
             textView = itemView.findViewById(R.id.control_calendar_month)
             rowLayout = itemView.findViewById(R.id.row_calendar_month_layout)
             rowLayout.setOnClickListener(this)
-
-            if (month_txt_size != null) textView.textSize = month_txt_size!!.toFloat()
+            if (month_txt_size != null) textView.textSize = month_txt_size!!
             if (month_unselected_txt_clr != null) textView.setTextColor(ContextCompat.getColor(mContext, month_unselected_txt_clr!!))
-            if (month_font != null) textView.typeface = ResourcesCompat.getFont(mContext, month_font!!)
+            try {
+                if (month_font != null) textView.typeface = ResourcesCompat.getFont(mContext, month_font!!)
+            }catch (e: Exception){
+                Log.e(TAG, "$month_font not found!")
+            }
         }
-
         fun updateUi(holder: MyViewHolder, month: String, position: Int) {
             if (selectedPosition != position) {
                 if (month_unselected_txt_clr != null)

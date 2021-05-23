@@ -5,5 +5,5 @@ data class MonthConfiguration(
     var mSelectedClr: Int? = null,
     var mUnSelectedClr: Int? = null,
     var mFont: Int? = null,
-    var mTxtSize: Int? = null,
+    var mTxtSize: Float? = null,
 )

@@ -1,54 +1,70 @@
 package com.shahzadafridi.calendarview
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface
+import android.graphics.fonts.FontFamily
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shahzadafridi.calendarview.Util.dp
+import com.shahzadafridi.calendarview.Util.months
+import com.shahzadafridi.calendarview.Util.weekDays
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class CalendarView : LinearLayout, CalenderViewInterface {
 
+    val TAG: String = "CalendarView"
+
     // how many days to show, defaults to six weeks, 42 days
     private val DAYS_COUNT = 42
 
     //Date format                                      //Default
-    private var dateFormat: String? = null;            private val DATE_FORMAT: String = "yyyy"
+    private var yearDateFormat: String? = null;        private val YEAR_DATE_FORMAT: String = "yyyy"
+    private var yearTextColor: Int? = null;            private val YEAR_TEXT_COLOR: Int = R.color.cblack
+    private var yearTextSize: Float? = null;           private val YEAR_TEXT_SIZE: Float = 16f
+    private var yearTextFont: Int? = null;             private val YEAR_TEXT_FONT: Int = R.font.pfd_cond_regular
+
+    //Back Button                                      //Default
+    private var isBackButtonShow: Boolean? = null;     private var IS_BACK_BUTTON_SHOW: Boolean = true
+    private var backButtonBg: Int? = null;             private var BACK_BUTTON_BG: Int = R.drawable.back_icon
 
     //Background                                       //Default
     private var cv_bg: Int? = null;                    private var CALENDER_VIEW_BG: Int = R.drawable.rect_lr_wround_bg
 
     //Month                                            //Default
     private var month_font: Int? = null;               private var MONTH_FONT: Int = R.font.pfd_cond_regular
-    private var month_txt_clr: Int? = null;            private var MONTH_TEXT_COLOR: Int = R.color.cblack
-    private var month_txt_size: Int? = null;           private var MONTH_TEXT_SIZE: Int = 16
+    private var month_txt_size: Float? = null;         private var MONTH_TEXT_SIZE: Float = 16f
     private var month_selected_txt_clr: Int? = null;   private var MONTH_SELECTED_TEXT_COLOR: Int = R.color.cblack
     private var month_unselected_txt_clr: Int? = null; private var MONTH_UNSELECTED_TEXT_COLOR: Int = R.color.greyed_out
-    private var month_bg: Int? = null;                 private var MONTH_BG: Int = R.color.cwhite
+    private var month_bg: Int? = null;                 private var MONTH_BG: Int = android.R.color.transparent
 
     //Week                                             //Default
-    private var week_font: Int? = null;                private var WEEK_TEXT_COLOR: Int = R.color.cblack
-    private var week_txt_clr: Int? = null;             private var WEEK_BG_COLOR: Int = R.color.cwhite
-    private var week_bg_clr: Int? = null;              private var WEEK_FONT: Int = R.font.pfd_cond_regular
-    private var week_txt_size: Int? = null;            private var WEEK_TEXT_SIZE: Int = 16
+    private var week_font: Int? = null;                private var WEEK_FONT: Int = R.font.pfd_cond_regular
+    private var week_txt_clr: Int? = null;             private var WEEK_TEXT_COLOR: Int = R.color.cblack
+    private var week_bg_clr: Int? = null;              private var WEEK_BG_COLOR: Int = android.R.color.transparent
+    private var week_txt_size: Float? = null;          private var WEEK_TEXT_SIZE: Float = 16f
 
     //Day                                              //Default
     private var day_font: Int? = null;                 private var DAY_FONT: Int = R.font.pfd_cond_regular
-    private var day_size: Int? = null;                 private var DAY_BG: Int = R.color.summer
-    private var day_bg: Int? = null;                   private var DAY_SIZE: Int = 14
+    private var day_size: Float? = null;               private var DAY_SIZE: Float = 14f
+    private var day_bg: Int? = null;                   private var DAY_BG: Int = android.R.color.transparent
     private var day_txt_clr: Int? = null;              private var DAY_TEXT_COLOR: Int = R.color.cblack
-    private var day_txt_size: Int? = null;             private var DAY_TEXT_SIZE: Int = 14
+    private var day_txt_size: Float? = null;           private var DAY_TEXT_SIZE: Float = 14f
     private var day_selected_txt_clr: Int? = null;     private var DAY_SELECTED_TEXT_COLOR: Int = R.color.cwhite
-    private var day_selected_bg: Int? = null;            private var DAY_SELECTED_BG: Int = R.color.cblack
+    private var day_selected_bg: Int? = null;          private var DAY_SELECTED_BG: Int = R.drawable.ic_black_oval
 
     // internal components
     private var yearLayout: RelativeLayout? = null
@@ -106,38 +122,39 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         buildCalendar()
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun loadDateFormat(attrs: AttributeSet?) {
         val calenderViewAttr = context.obtainStyledAttributes(attrs, R.styleable.CalendarView)
         try {
             //Date Formate
-            dateFormat = calenderViewAttr.getString(R.styleable.CalendarView_dateFormat)
+            yearDateFormat = calenderViewAttr.getString(R.styleable.CalendarView_year_date_Formate)
+            yearTextFont = calenderViewAttr.getResourceId(R.styleable.CalendarView_year_text_font,YEAR_TEXT_FONT)
+            yearTextColor = calenderViewAttr.getResourceId(R.styleable.CalendarView_year_text_clr,YEAR_TEXT_COLOR)
+            yearTextSize = calenderViewAttr.getDimension(R.styleable.CalendarView_year_text_size,YEAR_TEXT_SIZE)
+            //Back
+            isBackButtonShow = calenderViewAttr.getBoolean(R.styleable.CalendarView_is_back_button_show,IS_BACK_BUTTON_SHOW)
+            backButtonBg = calenderViewAttr.getResourceId(R.styleable.CalendarView_back_button_bg,BACK_BUTTON_BG)
             //Background
             cv_bg = calenderViewAttr.getResourceId(R.styleable.CalendarView_cv_bg, CALENDER_VIEW_BG)
-            /*
             //Month
-            dateFormat = calenderViewAttr.getString(R.styleable.CalendarView_dateFormat)
-            month_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_font, MONTH_FONT)
-            month_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_txt_clr, MONTH_TEXT_COLOR)
-            month_txt_size = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_txt_size, MONTH_TEXT_SIZE)
+            month_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_font,MONTH_FONT)
+            month_txt_size = calenderViewAttr.getDimension(R.styleable.CalendarView_month_txt_size, MONTH_TEXT_SIZE)
             month_selected_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_selected_txt_clr, MONTH_SELECTED_TEXT_COLOR)
             month_unselected_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_unselect_txt_clr, MONTH_UNSELECTED_TEXT_COLOR)
             month_bg = calenderViewAttr.getResourceId(R.styleable.CalendarView_month_bg, MONTH_BG)
             //Week
-            week_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_week_font, WEEK_FONT)
+            week_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_week_font,WEEK_FONT)
             week_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_week_txt_clr, WEEK_TEXT_COLOR)
             week_bg_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_week_bg_clr, WEEK_BG_COLOR)
-            week_txt_size = calenderViewAttr.getResourceId(R.styleable.CalendarView_week_txt_size, WEEK_TEXT_SIZE)
+            week_txt_size = calenderViewAttr.getDimension(R.styleable.CalendarView_week_txt_size, WEEK_TEXT_SIZE)
             //Day
-            day_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_font, DAY_FONT)
-            day_size = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_size, DAY_SIZE)
+            day_font = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_font,DAY_FONT)
+            day_size = calenderViewAttr.getDimension(R.styleable.CalendarView_day_size, DAY_SIZE)
             day_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_txt_clr, DAY_TEXT_COLOR)
-            day_txt_size = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_text_size, DAY_TEXT_SIZE)
+            day_txt_size = calenderViewAttr.getDimension(R.styleable.CalendarView_day_text_size, DAY_TEXT_SIZE)
             day_bg = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_bg, DAY_BG)
-            day_select_bg = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_select_bg, DAY_SELECTED_BG)
+            day_selected_bg = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_select_bg, DAY_SELECTED_BG)
             day_selected_txt_clr = calenderViewAttr.getResourceId(R.styleable.CalendarView_day_select_txt_clr, DAY_SELECTED_TEXT_COLOR)
-
-            */
-
         } finally {
             calenderViewAttr.recycle()
         }
@@ -155,6 +172,14 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         calendarMonthRv = findViewById(R.id.calendar_month_rv)
         calendarMonthRv!!.setHasFixedSize(true)
         calendarMonthRv!!.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        withBackButton(isBackButtonShow,backButtonBg)
+        withYearPanel(yearDateFormat,yearTextColor,yearTextSize,yearTextFont)
+        withMonthPanel(month_font,month_txt_size,month_selected_txt_clr,month_unselected_txt_clr,month_bg, months)
+        withWeekPanel(week_font,week_txt_clr,week_txt_size,week_bg_clr, weekDays)
+        withDayPanel(day_font,day_txt_clr,day_txt_size,day_selected_txt_clr,day_selected_bg,day_bg)
+        cv_bg?.let {
+            this.setBackgroundResource(it)
+        }
     }
 
     override fun onMonthClick(view: View?, month: String, position: Int) {
@@ -195,7 +220,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         adapterMonth = MonthAdapter(context,this,monthConfig,Util.months,monthNumber)
         calendarMonthRv!!.adapter = adapterMonth
 
-        val sdfYear = if (dateFormat != null) SimpleDateFormat(dateFormat) else SimpleDateFormat(DATE_FORMAT)
+        val sdfYear = if (yearDateFormat != null) SimpleDateFormat(yearDateFormat) else SimpleDateFormat(YEAR_DATE_FORMAT)
         yearTv!!.text = sdfYear.format(currentDate.time)
 
         // set header color according to current season
@@ -223,14 +248,15 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         return this
     }
 
-    override fun withBackButton(isShow: Boolean, background: Int?): CalendarView {
+    override fun withBackButton(isShow: Boolean?, background: Int?): CalendarView {
         background?.let {
             backIv!!.setImageResource(it)
         }
-        if (isShow){
-            backIv!!.visibility = View.VISIBLE
-        }else{
-            backIv!!.visibility = View.INVISIBLE
+        isShow?.let {
+            if (it)
+                backIv!!.visibility = View.VISIBLE
+            else
+                backIv!!.visibility = View.INVISIBLE
         }
         backIv!!.setOnClickListener { view ->
             eventHandler?.onBackClick(view)
@@ -247,18 +273,22 @@ class CalendarView : LinearLayout, CalenderViewInterface {
     override fun withYearPanel(
         dateFormat: String?,
         textColor: Int?,
-        textSize: Int?,
+        textSize: Float?,
         font: Int?
     ): CalendarView {
-        this.dateFormat = dateFormat
+        this.yearDateFormat = dateFormat
         textSize?.let {
-            yearTv!!.textSize = it.toFloat()
+            yearTv!!.textSize = it
         }
         textColor?.let { clr ->
             yearTv!!.setTextColor(ContextCompat.getColor(context, clr))
         }
         font?.let {
-            yearTv!!.typeface = ResourcesCompat.getFont(context, it)
+            try {
+                yearTv!!.typeface = ResourcesCompat.getFont(context, it)
+            }catch (e: Exception){
+                Log.e(TAG, "$font not found!")
+            }
         }
         return this
     }
@@ -275,28 +305,23 @@ class CalendarView : LinearLayout, CalenderViewInterface {
 
     override fun withMonthPanel(
         font: Int?,
-        textSize: Int?,
+        textSize: Float?,
         selectedTextColor: Int?,
         unSelectedTextColor: Int?,
         background: Int?,
         months: ArrayList<String>?
     ): CalendarView {
-        if (months != null) {
-            Util.months = months
-        }
         month_font = font
         month_txt_size = textSize
         month_selected_txt_clr = selectedTextColor
         month_unselected_txt_clr = unSelectedTextColor
         month_bg = background
+        if (months != null) Util.months = months
         monthConfig.mBg = month_bg
         monthConfig.mSelectedClr = month_selected_txt_clr
         monthConfig.mUnSelectedClr = month_unselected_txt_clr
         monthConfig.mFont = month_font
         monthConfig.mTxtSize = month_txt_size
-        month_font?.let {
-            yearTv!!.typeface = ResourcesCompat.getFont(context, it)
-        }
         month_bg?.let {
             calendarMonthRv!!.background = ContextCompat.getDrawable(context, it)
         }
@@ -313,7 +338,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         return this
     }
 
-    override fun withWeekPanel(font: Int?, textColor: Int?, textSize: Int?, background: Int?,weekDays: ArrayList<String>?): CalendarView {
+    override fun withWeekPanel(font: Int?, textColor: Int?, textSize: Float?, background: Int?,weekDays: ArrayList<String>?): CalendarView {
         if (weekDays != null) {
             Util.weekDays = weekDays
         }
@@ -323,16 +348,17 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         week_bg_clr = background
 
         var i = 0
-
         weekLayout!!.children.iterator().forEach {
             week_font?.let { font ->
-                (it as TextView).typeface = ResourcesCompat.getFont(context, font)
+                try {
+                    (it as TextView).typeface = ResourcesCompat.getFont(context, font)
+                }catch (e: Exception){ Log.e(TAG, "$font not found!") }
             }
             week_txt_clr?.let { clr ->
                 (it as TextView).setTextColor(ContextCompat.getColor(context, clr))
             }
             week_txt_size?.let { size ->
-                (it as TextView).setTextSize(size.toFloat())
+                (it as TextView).setTextSize(size)
             }
             (it as TextView).text = Util.weekDays[i]
             i++
@@ -358,7 +384,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
     override fun withDayPanel(
         font: Int?,
         textColor: Int?,
-        textSize: Int?,
+        textSize: Float?,
         selectedTextColor: Int?,
         selectedBackground: Int?,
         background: Int?
