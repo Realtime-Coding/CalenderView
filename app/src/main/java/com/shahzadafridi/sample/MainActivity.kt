@@ -127,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                 .withCalenderViewBg(
                     background = R.drawable.rect_lr_wround_bg
                 )
+
                 .withEvents(
                     events = events,
                     eventDotColor = R.color.green

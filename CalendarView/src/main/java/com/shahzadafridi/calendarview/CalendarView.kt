@@ -2,8 +2,6 @@ package com.shahzadafridi.calendarview
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
-import android.graphics.fonts.FontFamily
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.children
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +62,9 @@ class CalendarView : LinearLayout, CalenderViewInterface {
     private var day_txt_size: Float? = null;           private var DAY_TEXT_SIZE: Float = 14f
     private var day_selected_txt_clr: Int? = null;     private var DAY_SELECTED_TEXT_COLOR: Int = R.color.cwhite
     private var day_selected_bg: Int? = null;          private var DAY_SELECTED_BG: Int = R.drawable.ic_black_oval
+
+    //Selected Date default Today
+    private var selectedDate: Calendar = Calendar.getInstance()
 
     // internal components
     private var yearLayout: RelativeLayout? = null
@@ -213,7 +213,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         }
 
         // update grid
-        adapter = CalendarAdapter(context, cells, events, eventHandler, dayConfig,monthNumber)
+        adapter = CalendarAdapter(context, cells, events, eventHandler, dayConfig,monthNumber,selectedDate)
         calendarDayRv!!.adapter = adapter
 
         //update months

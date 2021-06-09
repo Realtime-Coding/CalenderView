@@ -1,8 +1,6 @@
 package com.shahzadafridi.calendarview
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
 import android.util.Log
@@ -17,14 +15,14 @@ import androidx.recyclerview.widget.RecyclerView
 import java.lang.Exception
 import java.util.*
 
-
 class CalendarAdapter(
     context: Context,
     private val days: ArrayList<Calendar>, // days with events
     private val eventDays: HashSet<Calendar>?,
     private var eventsHandler: CalenderViewInterface.EventHandler?,
     private var dayConfig: DayConfiguration?,
-    monthNumber: Int
+    monthNumber: Int,
+    private var selectedDate: Calendar?
 ) : RecyclerView.Adapter<CalendarAdapter.MyViewHolder>() {
 
     val TAG: String = "CalendarAdapter"
@@ -113,19 +111,16 @@ class CalendarAdapter(
             val month = date.get(Calendar.MONTH)
             val year = date.get(Calendar.YEAR)
 
-            // today
-            val today = Calendar.getInstance()
-
             // set text
             holder.textView.text = date.get(Calendar.DATE).toString()
 
 
-            if (month != mMonthNumber || year != today.get(Calendar.YEAR)) {
+            if (month != mMonthNumber || year != selectedDate!!.get(Calendar.YEAR)) {
                 // if this day is outside current month, grey it out
                 holder.textView.setTextColor(ContextCompat.getColor(mContext, R.color.greyed_out))
                 holder.rowLayout.isEnabled = false
-            } else if (today.get(Calendar.DATE) == day && today.get(Calendar.MONTH) == month && today.get(Calendar.YEAR) == year) {
-                // if it is today, set it to blue/bold
+            } else if (selectedDate!!.get(Calendar.DATE) == day && selectedDate!!.get(Calendar.MONTH) == month && selectedDate!!.get(Calendar.YEAR) == year) {
+                // if it is today, set it to color/bold
                 day_selected_txt_clr?.let {
                     holder.textView.setTextColor(ContextCompat.getColor(mContext, it))
                 } ?: run{
@@ -153,7 +148,9 @@ class CalendarAdapter(
         }
 
         override fun onClick(v: View?) {
+            selectedDate = days[adapterPosition]
             eventsHandler?.onDayClick(view = v, date = days[adapterPosition].time, adapterPosition)
+            notifyDataSetChanged()
         }
 
         override fun onLongClick(v: View?): Boolean {
@@ -166,7 +163,9 @@ class CalendarAdapter(
         }
     }
 
-    fun setEventHandler(mEventsHandler: CalenderViewInterface.EventHandler) {
+    fun setEventHandler(
+        mEventsHandler: CalenderViewInterface.EventHandler
+    ) {
         this.eventsHandler = mEventsHandler
     }
 
