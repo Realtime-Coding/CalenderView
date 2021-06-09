@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //@isXMLConfiguration true because values setup in XML
-        setUpCalendarView(binding.calendarView,true)
+        setUpCalendarView(binding.calendarView,false)
     }
 
     fun showDialogCalendar(view: View) {
