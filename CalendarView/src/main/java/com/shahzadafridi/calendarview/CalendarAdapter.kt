@@ -164,7 +164,8 @@ class CalendarAdapter(
     }
 
     fun setEventHandler(
-        mEventsHandler: CalenderViewInterface.EventHandler
+        mEventsHandler: CalenderViewInterface.EventHandler,
+        calendarViewIntr: CalenderViewInterface
     ) {
         this.eventsHandler = mEventsHandler
     }
