@@ -270,11 +270,6 @@ class CalendarView : LinearLayout, CalenderViewInterface {
         return this
     }
 
-    override fun withUpdateSelectDate(calendar: Calendar): CalendarView {
-        this.selectedDate = calendar
-        return this
-    }
-
     override fun withYearPanel(
         dateFormat: String?,
         textColor: Int?,

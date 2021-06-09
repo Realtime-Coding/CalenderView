@@ -16,7 +16,6 @@ interface CalenderViewInterface {
     fun withDayPanel(font: Int? = null, textColor: Int? = null, textSize: Float? = null, selectedTextColor: Int? = null, selectedBackground:Int? = null, background: Int? = null): CalendarView
     fun withDayPanelMargin(top: Int = 0,bottom: Int = 0,left: Int = 0,right: Int = 0): CalendarView
     fun withCalenderViewBg(background: Int? = null): CalendarView
-    fun withUpdateSelectDate(selectedDate: Calendar): CalendarView
     fun buildCalendar(): CalendarView
     fun onMonthClick(view: View?, month: String, position: Int)
     interface EventHandler{
