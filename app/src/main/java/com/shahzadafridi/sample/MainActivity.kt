@@ -50,11 +50,14 @@ class MainActivity : AppCompatActivity() {
         add("SAT")
     }
 
+    var selectedDate: Calendar? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //@isXMLConfiguration true because values setup in XML
+        selectedDate = Calendar.getInstance()
         setUpCalendarView(binding.calendarView,true)
     }
 
@@ -127,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                 .withCalenderViewBg(
                     background = R.drawable.rect_lr_wround_bg
                 )
+                .withUpdateSelectDate(selectedDate!!)
                 .withEvents(
                     events = events,
                     eventDotColor = R.color.green
@@ -139,6 +143,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onDayClick(view: View?, date: Date, position: Int) {
                 val df = SimpleDateFormat.getDateInstance()
+                selectedDate = Calendar.getInstance().apply {
+                    time = date
+                }
                 Toast.makeText(this@MainActivity, df.format(date), Toast.LENGTH_SHORT).show()
                 Log.e("TEST", "onDayClick")
             }
