@@ -237,7 +237,7 @@ class CalendarView : LinearLayout, CalenderViewInterface {
      */
     fun setEventHandler(eventHandler: CalenderViewInterface.EventHandler?) {
         this.eventHandler = eventHandler
-        adapter!!.setEventHandler(eventHandler!!)
+        adapter!!.setEventHandler(eventHandler!!,this)
     }
 
     /**
@@ -267,6 +267,11 @@ class CalendarView : LinearLayout, CalenderViewInterface {
     override fun withEvents(events: HashSet<Calendar>?,eventDotColor: Int?): CalendarView {
         this.events = events
         dayConfig.eventDotColor = eventDotColor
+        return this
+    }
+
+    override fun withUpdateSelectDate(calendar: Calendar): CalendarView {
+        this.selectedDate = calendar
         return this
     }
 
