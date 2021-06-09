@@ -30,6 +30,7 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.4'
 
 ```kotlin
 
+  var selectedDate = Calendar.getInstance()
   var calendarView = findViewBydId(R.id.calendar_view)
 
   calendarView.builder()
@@ -69,6 +70,7 @@ implementation 'com.github.shahzadafridi:CalenderView:1.1.4'
       .withCalenderViewBg(
           background = R.drawable.rect_lr_wround_bg
       )
+      .withUpdateSelectDate(selectedDate!!) //It's required when using kotlin Instead of XML Configuration.
       .withEvents(
           events = events,
           eventDotColor = R.color.green
@@ -161,6 +163,10 @@ calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
 
     override fun onDayClick(view: View?, date: Date, position: Int) {
         val df = SimpleDateFormat.getDateInstance()
+        //Required for selected date background. Ignore If you are using XML configuration.
+        selectedDate = Calendar.getInstance().apply {
+           time = date
+        }
         Toast.makeText(this@MainActivity, df.format(date), Toast.LENGTH_SHORT).show()
         Log.e("TEST", "onDayClick")
     }
@@ -211,6 +217,7 @@ calendarView.setEventHandler(object : CalenderViewInterface.EventHandler {
 - **withDayPanel** can change the day Text font, Text Color, Text Size, Selected background, Selected Text Color, Background of day
 - **withCalenderViewBg** can change the CalendarView background
 - **withEvents** can gives events dates to calendarView which shows small dot indcaotr below of day
+- **withUpdateSelectDate** This method will change the background color of selected date. It's required when using Kotlin code instead of XML configuration
  
  
 #### Watch Demo Video
